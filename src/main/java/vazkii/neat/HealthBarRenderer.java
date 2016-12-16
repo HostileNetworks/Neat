@@ -69,6 +69,8 @@ public class HealthBarRenderer {
 		
 		float pastTranslate = 0F;
 		while(entity != null) {
+			if(NeatConfig.blacklist.contains(EntityList.getEntityString(entity)))
+				continue;
 			processing: {
 				float distance = passedEntity.getDistanceToEntity(viewPoint);
 				if(distance > NeatConfig.maxDistance || !passedEntity.canEntityBeSeen(viewPoint) || entity.isInvisible()) 
