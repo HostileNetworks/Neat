@@ -30,6 +30,7 @@ public class NeatConfig {
 	public static boolean showOnBosses = true;
 	public static boolean showOnlyFocused = true;
 	public static int showOnlyFocusedRange = 40;
+	public static boolean darknessAdjustment = true;
 	
 	public static List<String> blacklist;
 
@@ -60,6 +61,7 @@ public class NeatConfig {
 		showOnBosses = loadPropBool("Display on Bosses", showOnBosses);
 		showOnlyFocused = loadPropBool("Only show the health bar for the entity looked at", showOnlyFocused);
 		showOnlyFocusedRange = loadPropInt("Set the max range for checking what entity is looked at", showOnlyFocusedRange);
+		darknessAdjustment = loadPropBool("Darken the plates according to ambient brightness", darknessAdjustment);
 		
 		Property prop = config.get(Configuration.CATEGORY_GENERAL, "Blacklist", new String[] { "Shulker" });
 		blacklist = Arrays.asList(prop.getStringList());

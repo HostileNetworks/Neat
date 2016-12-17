@@ -84,6 +84,14 @@ public class HealthBarRenderer {
 			if(NeatConfig.blacklist.contains(EntityList.getEntityString(entity)))
 				continue;
 			processing: {
+				float brightness = 1.0f;
+				if (NeatConfig.darknessAdjustment) {
+					brightness = passedEntity.getBrightness(0.0f); // the parameter is unused
+					if (brightness < 0.1f)
+						brightness = 0.1f; // minecraft quirk (alpha values less than 0x4 will render as 100% opaque in some places)
+				}
+				int argbText = ( (int)(255 * brightness) << 24 ) | ( (int)(255 * brightness) << 16 ) | ( (int)(255 * brightness) << 8) | (int)(255 * brightness);
+							
 				float distance = passedEntity.getDistanceToEntity(viewPoint);
 				if(distance > NeatConfig.maxDistance || !passedEntity.canEntityBeSeen(viewPoint) || entity.isInvisible()) 
 					break processing;
@@ -177,10 +185,11 @@ public class HealthBarRenderer {
 					size = namel / 2F + 10F;
 				float healthSize = size * (health / maxHealth);
 				
+				//System.out.println(alpha);
 				// Background
 				if(NeatConfig.drawBackground) {
 					tessellator.startDrawingQuads();
-					tessellator.setColorRGBA(0, 0, 0, 64);
+					tessellator.setColorRGBA(0, 0, 0, (int) (64f * brightness));
 					tessellator.addVertex(-size - padding, -bgHeight, 0.0D);
 					tessellator.addVertex(-size - padding, barHeight + padding, 0.0D);
 					tessellator.addVertex(size + padding, barHeight + padding, 0.0D);
@@ -190,7 +199,7 @@ public class HealthBarRenderer {
 
 				// Gray Space
 				tessellator.startDrawingQuads();
-				tessellator.setColorRGBA(127, 127, 127, 127);
+				tessellator.setColorRGBA(127, 127, 127, (int) (127f * brightness));
 				tessellator.addVertex(-size, 0, 0.0D);
 				tessellator.addVertex(-size, barHeight, 0.0D);
 				tessellator.addVertex(size, barHeight, 0.0D);
@@ -199,7 +208,7 @@ public class HealthBarRenderer {
 
 				// Health Bar
 				tessellator.startDrawingQuads();
-				tessellator.setColorRGBA(r, g, b, 127);
+				tessellator.setColorRGBA(r, g, b, (int) (127f * brightness));
 				tessellator.addVertex(-size, 0, 0.0D);
 				tessellator.addVertex(-size, barHeight, 0.0D);
 				tessellator.addVertex(healthSize * 2 - size, barHeight, 0.0D);
@@ -211,7 +220,7 @@ public class HealthBarRenderer {
 				GL11.glPushMatrix();
 				GL11.glTranslatef(-size, -4.5F, 0F);
 				GL11.glScalef(s, s, s);
-				mc.fontRenderer.drawString(name, 0, 0, 0xFFFFFF);
+				mc.fontRenderer.drawString(name, 0, 0, argbText);
 
 				GL11.glPushMatrix();
 				float s1 = 0.75F;
@@ -228,14 +237,14 @@ public class HealthBarRenderer {
 					hpStr = hpStr.substring(0, hpStr.length() - 2);
 				
 				if(NeatConfig.showCurrentHP)
-					mc.fontRenderer.drawString(hpStr, 2, h, 0xFFFFFF);
+					mc.fontRenderer.drawString(hpStr, 2, h, argbText);
 				if(NeatConfig.showMaxHP)
-					mc.fontRenderer.drawString(maxHpStr, (int) (size / (s * s1) * 2) - 2 - mc.fontRenderer.getStringWidth(maxHpStr), h, 0xFFFFFF);
+					mc.fontRenderer.drawString(maxHpStr, (int) (size / (s * s1) * 2) - 2 - mc.fontRenderer.getStringWidth(maxHpStr), h, argbText);
 				if(NeatConfig.showPercentage)
-					mc.fontRenderer.drawString(percStr, (int) (size / (s * s1)) - mc.fontRenderer.getStringWidth(percStr) / 2, h, 0xFFFFFFFF);
+					mc.fontRenderer.drawString(percStr, (int) (size / (s * s1)) - mc.fontRenderer.getStringWidth(percStr) / 2, h, argbText);
  				GL11.glPopMatrix();
  				
- 				GL11.glColor4f(1F, 1F, 1F, 1F);
+ 				GL11.glColor4f(1F, 1F, 1F, brightness);
 				int off = 0;
 
 				s1 = 0.5F;
