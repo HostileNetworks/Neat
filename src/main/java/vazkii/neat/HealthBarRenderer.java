@@ -11,6 +11,7 @@ import net.minecraft.client.renderer.culling.Frustrum;
 import net.minecraft.client.renderer.entity.RenderItem;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.texture.TextureMap;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLiving;
@@ -167,7 +168,7 @@ public class HealthBarRenderer {
 				GL11.glTranslatef(0F, pastTranslate, 0F);
 				
 				float s = 0.5F;
-				String name = entity.getCommandSenderName();
+				String name = I18n.format(entity.getCommandSenderName());
 				if(entity instanceof EntityLiving && ((EntityLiving) entity).hasCustomNameTag())
 					name = EnumChatFormatting.ITALIC + ((EntityLiving) entity).getCustomNameTag();
 				float namel = mc.fontRenderer.getStringWidth(name) * s;
