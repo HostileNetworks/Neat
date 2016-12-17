@@ -86,9 +86,9 @@ public class HealthBarRenderer {
 			processing: {
 				float brightness = 1.0f;
 				if (NeatConfig.darknessAdjustment) {
-					brightness = passedEntity.getBrightness(0.0f); // the parameter is unused
+					brightness = passedEntity.getBrightness(0.0f); // parameter is unused 
 					if (brightness < 0.1f)
-						brightness = 0.1f; // minecraft quirk (alpha values less than 0x4 will render as 100% opaque in some places)
+						brightness = 0.1f; // fix a minecraft quirk
 				}
 				int argbText = ( (int)(255 * brightness) << 24 ) | ( (int)(255 * brightness) << 16 ) | ( (int)(255 * brightness) << 8) | (int)(255 * brightness);
 							
@@ -185,7 +185,6 @@ public class HealthBarRenderer {
 					size = namel / 2F + 10F;
 				float healthSize = size * (health / maxHealth);
 				
-				//System.out.println(alpha);
 				// Background
 				if(NeatConfig.drawBackground) {
 					tessellator.startDrawingQuads();
