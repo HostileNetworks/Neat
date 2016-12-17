@@ -167,7 +167,7 @@ public class HealthBarRenderer {
 				GL11.glTranslatef(0F, pastTranslate, 0F);
 				
 				float s = 0.5F;
-				String name = StatCollector.translateToLocal("entity." + EntityList.getEntityString(entity) + ".name");
+				String name = entity.getCommandSenderName();
 				if(entity instanceof EntityLiving && ((EntityLiving) entity).hasCustomNameTag())
 					name = EnumChatFormatting.ITALIC + ((EntityLiving) entity).getCustomNameTag();
 				float namel = mc.fontRenderer.getStringWidth(name) * s;
