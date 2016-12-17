@@ -111,6 +111,7 @@ public class HealthBarRenderer {
 				GL11.glRotatef(-RenderManager.instance.playerViewY, 0.0F, 1.0F, 0.0F);
 				GL11.glRotatef(RenderManager.instance.playerViewX, 1.0F, 0.0F, 0.0F);
 				GL11.glScalef(-scale, -scale, scale);
+				boolean lighting = GL11.glGetBoolean(GL11.GL_LIGHTING);
 				GL11.glDisable(GL11.GL_LIGHTING);
 				GL11.glDepthMask(false);
 				GL11.glDisable(GL11.GL_DEPTH_TEST);
@@ -272,7 +273,8 @@ public class HealthBarRenderer {
 				GL11.glDisable(GL11.GL_BLEND);
 				GL11.glEnable(GL11.GL_DEPTH_TEST);
 				GL11.glDepthMask(true);
-				GL11.glEnable(GL11.GL_LIGHTING);
+				if (lighting)
+					GL11.glEnable(GL11.GL_LIGHTING);
 				GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 				GL11.glPopMatrix();
 				
