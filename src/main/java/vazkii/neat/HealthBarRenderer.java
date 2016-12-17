@@ -63,7 +63,7 @@ public class HealthBarRenderer {
 			Set<Entity> entities = ReflectionHelper.getPrivateValue(WorldClient.class, client, new String[] { "entityList", "field_73032_d", "J" });
 	
 			for(Entity entity : entities)
-				if(entity != null && entity instanceof EntityLiving && entity.isInRangeToRender3d(renderingVector.xCoord, renderingVector.yCoord, renderingVector.zCoord) && (entity.ignoreFrustumCheck || frustrum.isBoundingBoxInFrustum(entity.boundingBox)) && entity.isEntityAlive()) 
+				if(entity != null && entity instanceof EntityLiving && entity != mc.thePlayer && entity.isInRangeToRender3d(renderingVector.xCoord, renderingVector.yCoord, renderingVector.zCoord) && (entity.ignoreFrustumCheck || frustrum.isBoundingBoxInFrustum(entity.boundingBox)) && entity.isEntityAlive()) 
 					renderHealthBar((EntityLiving) entity, event.partialTicks, cameraEntity);
 		}
 	}
