@@ -30,7 +30,7 @@ ext.configFile = file('build.properties')
 ext.config = parseConfig(configFile)
 //ext.priv = parseConfig(file('private.properties'))
 
-version = "${config.version}-${config.build_number}"
+version = "${config.version}.${config.build_number}"
 group = "vazkii.runetune" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = config.mod_name
 
@@ -74,7 +74,7 @@ processResources {
  */
 task deobfJar(type: Jar) {
     from(sourceSets.main.output)
-	archiveName = "${baseName} ${version}-deobf.${extension}"
+	archiveName = "${baseName}_${version}-ReignModpackFairplayFork-deobf.${extension}"
 }
 
 artifacts {
@@ -188,7 +188,7 @@ def parseConfig(File config) {
 
 jar {
     //rename the default output, for some better... sanity with scipts
-    archiveName = "${baseName} ${version}.${extension}"
+    archiveName = "${baseName}_${version}-ReignModpackFairplayFork.${extension}"
 }
 
 /*curse {
