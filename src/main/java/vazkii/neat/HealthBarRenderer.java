@@ -23,6 +23,7 @@ import net.minecraft.entity.monster.IMob;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
+import net.minecraft.potion.Potion;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.MovingObjectPosition;
@@ -45,7 +46,10 @@ public class HealthBarRenderer {
 
 		if(!NeatConfig.renderInF1 && !Minecraft.isGuiEnabled()) 
 			return;
-
+		
+		if (mc.thePlayer.isPotionActive(Potion.blindness))
+			return;
+		
 		EntityLivingBase cameraEntity = mc.renderViewEntity;
 		Vec3 renderingVector = cameraEntity.getPosition(event.partialTicks);
 		Frustrum frustrum = new Frustrum();
